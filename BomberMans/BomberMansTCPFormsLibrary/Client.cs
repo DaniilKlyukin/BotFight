@@ -8,9 +8,9 @@ namespace BomberMansTCPFormsLibrary
     public class Client
     {
         SimpleTcpClient? client;
-        public Func<GameObject[,]?, PlayerAction>? SendPlayerAction { get; set; }
+        public Func<GameObject?[,], PlayerAction>? SendPlayerAction { get; set; }
         public Action<IList<PlayerInfo>>? UpdatePlayersInfo { get; set; }
-        public Action<GameObject[,]?>? Visualize { get; set; }
+        public Action<GameObject?[,]>? Visualize { get; set; }
 
         public void Connect(string serverIpPort, string playerName)
         {
@@ -43,7 +43,7 @@ namespace BomberMansTCPFormsLibrary
         public void SendAction(PlayerAction act)
         {
             var command = new SendPlayerActionCommand(act);
-            client.Send(command.ConvertToJson());
+            client?.Send(command.ConvertToJson());
         }
 
         private async void DataReceived(object? sender, SuperSimpleTcp.DataReceivedEventArgs args)
@@ -68,6 +68,8 @@ namespace BomberMansTCPFormsLibrary
                             var actionTask = Task.Run(() => SendPlayerAction?.Invoke(map));
 
                             Task.WaitAll(writeInfoTask, visualizeTask, actionTask);
+
+                            Debug.WriteLine(actionTask.Result);
 
                             SendAction(actionTask.Result ?? PlayerAction.None);
                         }

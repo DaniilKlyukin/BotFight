@@ -11,8 +11,10 @@
         public BuildBonus(int i, int j) : base(i, j)
         {
         }
-
-        public static BuildBonus Parse(string s)
+        public override bool PlayerCanStep => true;
+        public override bool Destructible => true;
+        public override bool BlockExplosion => false;
+        public static BuildBonus Read(string s)
         {
             return new BuildBonus(s);
         }

@@ -33,7 +33,11 @@
         public int? SuperPowerTimeRemain { get; set; } = null;
         public int BombPowerModificator { get; set; }
 
-        public static Player Parse(string s)
+        public override bool PlayerCanStep => false;
+        public override bool Destructible => true;
+        public override bool BlockExplosion => false;
+
+        public static Player Read(string s)
         {
             return new Player(s);
         }

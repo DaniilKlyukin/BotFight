@@ -29,7 +29,11 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameForm));
             playersListBox = new ListBox();
+            playerContextMenu = new ContextMenuStrip(components);
+            kickPlayerButton = new ToolStripMenuItem();
+            banPlayerButton = new ToolStripMenuItem();
             GameTimer = new System.Windows.Forms.Timer(components);
             menuStrip = new MenuStrip();
             играToolStripMenuItem = new ToolStripMenuItem();
@@ -38,16 +42,13 @@
             StopButton = new ToolStripMenuItem();
             pictureBox = new PictureBox();
             splitContainer = new SplitContainer();
-            playerContextMenu = new ContextMenuStrip(components);
-            kickPlayerButton = new ToolStripMenuItem();
-            banPlayerButton = new ToolStripMenuItem();
+            playerContextMenu.SuspendLayout();
             menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)splitContainer).BeginInit();
             splitContainer.Panel1.SuspendLayout();
             splitContainer.Panel2.SuspendLayout();
             splitContainer.SuspendLayout();
-            playerContextMenu.SuspendLayout();
             SuspendLayout();
             // 
             // playersListBox
@@ -61,6 +62,26 @@
             playersListBox.Name = "playersListBox";
             playersListBox.Size = new Size(423, 877);
             playersListBox.TabIndex = 0;
+            // 
+            // playerContextMenu
+            // 
+            playerContextMenu.Items.AddRange(new ToolStripItem[] { kickPlayerButton, banPlayerButton });
+            playerContextMenu.Name = "playerContextMenu";
+            playerContextMenu.Size = new Size(159, 48);
+            // 
+            // kickPlayerButton
+            // 
+            kickPlayerButton.Name = "kickPlayerButton";
+            kickPlayerButton.Size = new Size(158, 22);
+            kickPlayerButton.Text = "Выгнать";
+            kickPlayerButton.Click += kickPlayerButton_Click;
+            // 
+            // banPlayerButton
+            // 
+            banPlayerButton.Name = "banPlayerButton";
+            banPlayerButton.Size = new Size(158, 22);
+            banPlayerButton.Text = "Заблокировать";
+            banPlayerButton.Click += banPlayerButton_Click;
             // 
             // GameTimer
             // 
@@ -134,26 +155,6 @@
             splitContainer.SplitterWidth = 12;
             splitContainer.TabIndex = 4;
             // 
-            // playerContextMenu
-            // 
-            playerContextMenu.Items.AddRange(new ToolStripItem[] { kickPlayerButton, banPlayerButton });
-            playerContextMenu.Name = "playerContextMenu";
-            playerContextMenu.Size = new Size(181, 70);
-            // 
-            // kickPlayerButton
-            // 
-            kickPlayerButton.Name = "kickPlayerButton";
-            kickPlayerButton.Size = new Size(180, 22);
-            kickPlayerButton.Text = "Выгнать";
-            kickPlayerButton.Click += kickPlayerButton_Click;
-            // 
-            // banPlayerButton
-            // 
-            banPlayerButton.Name = "banPlayerButton";
-            banPlayerButton.Size = new Size(180, 22);
-            banPlayerButton.Text = "Заблокировать";
-            banPlayerButton.Click += banPlayerButton_Click;
-            // 
             // GameForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -161,8 +162,10 @@
             ClientSize = new Size(1314, 905);
             Controls.Add(splitContainer);
             Controls.Add(menuStrip);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "GameForm";
-            Text = "Form1";
+            Text = "Чемпионат \"Бомбермен\"";
+            playerContextMenu.ResumeLayout(false);
             menuStrip.ResumeLayout(false);
             menuStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox).EndInit();
@@ -171,7 +174,6 @@
             splitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainer).EndInit();
             splitContainer.ResumeLayout(false);
-            playerContextMenu.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }

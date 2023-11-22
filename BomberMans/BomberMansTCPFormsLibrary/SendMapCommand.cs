@@ -7,10 +7,10 @@ namespace BomberMansTCPFormsLibrary
 {
     public class SendMapCommand : Command
     {
-        public GameObject[,]? Map { get; }
+        public GameObject?[,] Map { get; }
         public IList<PlayerInfo> PlayerInfos { get; }
 
-        public SendMapCommand(GameObject[,]? map, IList<PlayerInfo> playerInfos)
+        public SendMapCommand(GameObject?[,] map, IList<PlayerInfo> playerInfos)
         {
             Map = map;
             PlayerInfos = playerInfos;
@@ -21,14 +21,15 @@ namespace BomberMansTCPFormsLibrary
             var json = new JObject();
             json["Command"] = ((int)Commands.SendMap).ToString();
 
-            var wallsStringBuilder = new StringBuilder();
-            var explosionsStringBuilder = new StringBuilder();
-            var bombPowerStringBuilder = new StringBuilder();
-            var bombsStringBuilder = new StringBuilder();
-            var buildsStringBuilder = new StringBuilder();
-            var playersStringBuilder = new StringBuilder();
-            var minesStringBuilder = new StringBuilder();
-            var superPowerStringBuilder = new StringBuilder();
+            var wallsString = new StringBuilder();
+            var heavyWalls = new StringBuilder();
+            var explosions = new StringBuilder();
+            var bombPower = new StringBuilder();
+            var bombs = new StringBuilder();
+            var builds = new StringBuilder();
+            var players = new StringBuilder();
+            var mines = new StringBuilder();
+            var superPower = new StringBuilder();
 
             for (int i = 0; i < Map.GetLength(0); i++)
             {
@@ -36,17 +37,18 @@ namespace BomberMansTCPFormsLibrary
                 {
                     switch (Map[i, j])
                     {
-                        case Wall: wallsStringBuilder.Append($"{i},{j};"); break;
-                        case Explosion: explosionsStringBuilder.Append($"{i},{j};"); break;
-                        case BombPowerBonus: bombPowerStringBuilder.Append($"{i},{j};"); break;
-                        case BuildBonus: buildsStringBuilder.Append($"{i},{j};"); break;
-                        case SuperPowerBonus: superPowerStringBuilder.Append($"{i},{j};"); break;
-                        case LandMine: minesStringBuilder.Append($"{i},{j};"); break;
-                        case Bomb b: bombsStringBuilder.Append($"{i},{j},{b.Power},{b.TimeRemain};"); break;
+                        case Wall: wallsString.Append($"{i},{j};"); break;
+                        case HeavyWall: heavyWalls.Append($"{i},{j};"); break;
+                        case Explosion: explosions.Append($"{i},{j};"); break;
+                        case BombPowerBonus: bombPower.Append($"{i},{j};"); break;
+                        case BuildBonus: builds.Append($"{i},{j};"); break;
+                        case SuperPowerBonus: superPower.Append($"{i},{j};"); break;
+                        case LandMine: mines.Append($"{i},{j};"); break;
+                        case Bomb b: bombs.Append($"{i},{j},{b.Power},{b.TimeRemain};"); break;
                         case Player p:
                             {
                                 var sptr = p.SuperPowerTimeRemain ?? 0;
-                                playersStringBuilder.Append($"{i},{j},{p.Name},{sptr};");
+                                players.Append($"{i},{j},{p.Name},{sptr};");
                             }
                             break;
                     }
@@ -58,19 +60,20 @@ namespace BomberMansTCPFormsLibrary
             foreach (var info in PlayerInfos)
             {
                 var isAlive = info.IsAlive ? 1 : 0;
-                playersInfoStringBuilder.Append($"{info.Name},{info.Score},{isAlive}");
+                playersInfoStringBuilder.Append($"{info.Name},{info.Score},{isAlive};");
             }
 
             json["Map"] = new JObject();
             json["Map"]["Size"] = Map.GetLength(0);
-            json["Map"]["Walls"] = wallsStringBuilder.ToString();
-            json["Map"]["Explosions"] = explosionsStringBuilder.ToString();
-            json["Map"]["BPowder"] = bombPowerStringBuilder.ToString();
-            json["Map"]["Builds"] = buildsStringBuilder.ToString();
-            json["Map"]["Mines"] = minesStringBuilder.ToString();
-            json["Map"]["Bombs"] = bombsStringBuilder.ToString();
-            json["Map"]["SuperPower"] = superPowerStringBuilder.ToString();
-            json["Map"]["Players"] = playersStringBuilder.ToString();
+            json["Map"]["Walls"] = wallsString.ToString();
+            json["Map"]["HWalls"] = heavyWalls.ToString();
+            json["Map"]["Explosions"] = explosions.ToString();
+            json["Map"]["BPowder"] = bombPower.ToString();
+            json["Map"]["Builds"] = builds.ToString();
+            json["Map"]["Mines"] = mines.ToString();
+            json["Map"]["Bombs"] = bombs.ToString();
+            json["Map"]["SuperPower"] = superPower.ToString();
+            json["Map"]["Players"] = players.ToString();
             json["PlayersInfo"] = playersInfoStringBuilder.ToString();
 
             return Regex.Replace(json.ToString(), @"\s", "");
@@ -82,7 +85,7 @@ namespace BomberMansTCPFormsLibrary
 
             foreach (var p in power.Split(';').Where(s => s.Any()))
             {
-                var go = T.Parse(p);
+                var go = T.Read(p);
 
                 map[go.i, go.j] = go;
             }
@@ -96,6 +99,7 @@ namespace BomberMansTCPFormsLibrary
             var map = new GameObject?[size, size];
 
             ReadGameObjectToMap<Wall>(json, map, "Walls");
+            ReadGameObjectToMap<HeavyWall>(json, map, "HWalls");
             ReadGameObjectToMap<Explosion>(json, map, "Explosions");
             ReadGameObjectToMap<BombPowerBonus>(json, map, "BPowder");
             ReadGameObjectToMap<BuildBonus>(json, map, "Builds");

@@ -1,6 +1,6 @@
 ﻿namespace BomberManClient
 {
-    partial class Form1
+    partial class ClientForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClientForm));
             splitContainer = new SplitContainer();
             pictureBox = new PictureBox();
             playersListBox = new ListBox();
@@ -78,14 +79,15 @@
             playersListBox.Size = new Size(385, 731);
             playersListBox.TabIndex = 0;
             // 
-            // Form1
+            // ClientForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1196, 731);
             Controls.Add(splitContainer);
-            Name = "Form1";
-            Text = "Form1";
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            Name = "ClientForm";
+            Text = "Чемпионат \"Бомбермен\"";
             splitContainer.Panel1.ResumeLayout(false);
             splitContainer.Panel1.PerformLayout();
             splitContainer.Panel2.ResumeLayout(false);

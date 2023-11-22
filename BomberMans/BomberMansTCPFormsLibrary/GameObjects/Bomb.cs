@@ -4,7 +4,9 @@
     {
         public const int BasicPower = 2;
         public const int BasicTimeRemain = 5;
-
+        public override bool PlayerCanStep => false;
+        public override bool Destructible => true;
+        public override bool BlockExplosion => false;
         public Bomb(string str) : base(str)
         {
             var info = str.Split(',');
@@ -27,7 +29,7 @@
             TimeRemain--;
         }
 
-        public static Bomb Parse(string s)
+        public static Bomb Read(string s)
         {
             return new Bomb(s);
         }

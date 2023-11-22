@@ -12,17 +12,61 @@ namespace BomberMans
 
         public int? RessurectionTime { get; set; } = null;
 
-        public double WallSpawnProbability { get; set; } = 0.2;
-
-
         public int MapSize { get; private set; }
         Random rnd = new Random();
         GameObjectsSpawner spawner = new GameObjectsSpawner();
 
-        public GameController()
+        public GameController(int mapSize = 40)
         {
+            MapSize = mapSize;
             gameObjects = new Dictionary<(int, int), GameObject>();
             actions = new Dictionary<string, PlayerAction>();
+        }
+
+        public void GenerateRandomMap(int mapSize = 40)
+        {
+            MapSize = mapSize;
+            gameObjects = new Dictionary<(int, int), GameObject>();
+
+            MapGenerator.AddMapBorder(gameObjects, mapSize);
+            MapGenerator.AddRandomWalls(gameObjects, mapSize, spawner);
+
+            MapGenerator.PlaceObjects(
+                gameObjects, mapSize, 7, 4, 15, 1, 1);
+        }
+
+        public void GenerateMeshMap(int mapSize = 40, int meshCellSize = 3)
+        {
+            MapSize = mapSize;
+            gameObjects = new Dictionary<(int, int), GameObject>();
+            var dirs = new[] { (meshCellSize + 1, 1), (1, meshCellSize + 1) };
+
+            MapGenerator.AddMapBorder(gameObjects, mapSize);
+
+            foreach (var (dx, dy) in dirs)
+            {
+                for (int i = 0; i < mapSize; i += dx)
+                {
+                    for (int j = 0; j < mapSize; j += dy)
+                    {
+                        if (gameObjects.ContainsKey((i, j)))
+                            continue;
+
+                        var hw = rnd.NextDouble();
+                        if (hw <= spawner.HeavyWallSpawnProbability)
+                        {
+                            gameObjects.Add((i, j), new HeavyWall(i, j));
+                        }
+                        else
+                        {
+                            gameObjects.Add((i, j), new Wall(i, j));
+                        }
+                    }
+                }
+            }
+
+            MapGenerator.PlaceObjects(
+                gameObjects, mapSize, 7, 4, 15, 1, 1);
         }
 
         public void AddAction(string ip, PlayerAction act)
@@ -56,30 +100,12 @@ namespace BomberMans
             }
         }
 
-        private List<(int, int)> GetValidCoordinates()
-        {
-            var validCells = new List<(int, int)>();
-
-            for (int i = 0; i < MapSize; i++)
-            {
-                for (int j = 0; j < MapSize; j++)
-                {
-                    if (!gameObjects.ContainsKey((i, j)))
-                    {
-                        validCells.Add((i, j));
-                    }
-                }
-            }
-
-            return validCells;
-        }
-
         public void AddPlayer(string ip, string name)
         {
             if (ContainsPlayer(ip))
                 return;
 
-            var validCells = GetValidCoordinates();
+            var validCells = MapGenerator.GetValidPlayerCoordinates(gameObjects, MapSize).ToList();
 
             var rndIndex = rnd.Next(validCells.Count);
             var (i0, j0) = validCells[rndIndex];
@@ -102,7 +128,7 @@ namespace BomberMans
             if (ps.Any())
                 return;
 
-            var validCells = GetValidCoordinates();
+            var validCells = MapGenerator.GetValidPlayerCoordinates(gameObjects, MapSize).ToList();
 
             var rndIndex = rnd.Next(validCells.Count);
             var (i0, j0) = validCells[rndIndex];
@@ -114,7 +140,7 @@ namespace BomberMans
             gameObjects.Add((i0, j0), p);
         }
 
-        public void RessurectPlayer(string ip)
+        public void ResurrectPlayer(string ip)
         {
             if (!players.ContainsKey(ip))
                 return;
@@ -132,101 +158,6 @@ namespace BomberMans
                 return;
 
             players[ip].Name = name;
-        }
-
-        public void SetupRandomLevel(int mapSize)
-        {
-            MapSize = mapSize;
-            gameObjects = new Dictionary<(int, int), GameObject>();
-
-            for (int i = 0; i < MapSize; i++)
-            {
-                for (int j = 0; j < MapSize; j++)
-                {
-                    var r = rnd.NextDouble();
-                    if (i == 0 || j == 0 || i == MapSize - 1 || j == MapSize - 1 || r <= WallSpawnProbability)
-                    {
-                        gameObjects.Add((i, j), new Wall(i, j));
-                    }
-                }
-            }
-
-            PlaceObjects(2, 2, 5);
-        }
-
-        public void SetupMeshLevel(int mapSize)
-        {
-            MapSize = mapSize;
-            gameObjects = new Dictionary<(int, int), GameObject>();
-
-            for (int i = 0; i < MapSize; i += 3)
-            {
-                for (int j = 0; j < MapSize; j++)
-                {
-                    var r = rnd.NextDouble();
-                    if (r <= 1 && !gameObjects.ContainsKey((i, j)))
-                    {
-                        gameObjects.Add((i, j), new Wall(i, j));
-                    }
-                }
-            }
-
-            for (int j = 0; j < MapSize; j += 3)
-            {
-                for (int i = 0; i < MapSize; i++)
-                {
-                    var r = rnd.NextDouble();
-                    if (r <= 1 && !gameObjects.ContainsKey((i, j)))
-                    {
-                        gameObjects.Add((i, j), new Wall(i, j));
-                    }
-                }
-            }
-
-            PlaceObjects(2, 2, 5);
-        }
-
-        private void PlaceObjects(int minesCount = 1, int buildsCount = 1, int powderCount = 1, int superPowerCount = 1)
-        {
-            var totalCount = minesCount + buildsCount + powderCount + superPowerCount;
-
-            if (totalCount == 0)
-                return;
-
-            var validCells = GetValidCoordinates();
-
-            rnd.Shuffle(validCells);
-
-            var cells = new Queue<(int, int)>(validCells.Take(totalCount).ToArray());
-
-            while (true)
-            {
-                if (!cells.Any())
-                    return;
-
-                var (i, j) = cells.Dequeue();
-
-                if (minesCount > 0)
-                {
-                    gameObjects.Add((i, j), new LandMine(i, j));
-                    minesCount--;
-                }
-                else if (buildsCount > 0)
-                {
-                    gameObjects.Add((i, j), new BuildBonus(i, j));
-                    buildsCount--;
-                }
-                else if (powderCount > 0)
-                {
-                    gameObjects.Add((i, j), new BombPowerBonus(i, j));
-                    powderCount--;
-                }
-                else if (superPowerCount > 0)
-                {
-                    gameObjects.Add((i, j), new SuperPowerBonus(i, j));
-                    superPowerCount--;
-                }
-            }
         }
 
         public GameObject? GetObject(int i, int j)
@@ -278,7 +209,11 @@ namespace BomberMans
             if (g is BombPowerBonus)
             {
                 p.BombPowerModificator++;
-                p.Score++;
+                p.Score += BombPowerBonus.Score;
+            }
+            else if (g is Diamond)
+            {
+                p.Score += Diamond.Score;
             }
             else if (g is LandMine m)
             {
@@ -322,20 +257,21 @@ namespace BomberMans
             var cellI = i0 + di;
             var cellJ = j0 + dj;
 
-            var brokenWalls = 0;
+            var broken = 0;
 
             for (int k = 0; k < 2 * (Bomb.BasicPower + p.BombPowerModificator); k++)
             {
-                var brokenWall = gameObjects.ContainsKey((cellI, cellJ)) && gameObjects[(cellI, cellJ)] is Wall;
+                var coords = (cellI, cellJ);
+                var brokenObj = gameObjects.ContainsKey(coords) && gameObjects[coords].BlockExplosion;
 
                 AddExplosion(cellI, cellJ, ip);
                 cellI += di;
                 cellJ += dj;
 
-                if (brokenWall)
-                    brokenWalls++;
+                if (brokenObj)
+                    broken++;
 
-                if (brokenWalls == SuperPowerBonus.MaxBrokenWalls)
+                if (broken > SuperPowerBonus.MaxPenetration || gameObjects.ContainsKey(coords) && !gameObjects[coords].Destructible && gameObjects[coords].BlockExplosion)
                     break;
             }
         }
@@ -347,9 +283,9 @@ namespace BomberMans
 
             if (gameObjects.ContainsKey((i, j)))
             {
-                var obj = gameObjects[(i, j)];
+                var go = gameObjects[(i, j)];
 
-                if (obj is Player p)
+                if (go is Player p)
                 {
                     if (p.SuperPowerTimeRemain != null)
                         return;
@@ -358,15 +294,15 @@ namespace BomberMans
 
                     gameObjects[(i, j)] = new Explosion(i, j, owner ?? "");
                 }
-                else
+                else if (go.Destructible)
                 {
                     gameObjects[(i, j)] = new Explosion(i, j, owner ?? "");
 
-                    if (obj is Bomb b)
+                    if (go is Bomb b)
                     {
                         MakeBombExplosion(b, owner);
                     }
-                    else if (obj is LandMine m)
+                    else if (go is LandMine m)
                     {
                         MakeMineExplosion(m, owner);
                     }
@@ -395,7 +331,7 @@ namespace BomberMans
 
         private void MakeMineExplosion(LandMine m, string? owner = null)
         {
-            AddExplosion(m.i, m.j);
+            AddExplosion(m.i, m.j, owner);
 
             for (int i = m.i - LandMine.Power; i <= m.i + LandMine.Power; i++)
             {
@@ -439,44 +375,27 @@ namespace BomberMans
         {
             gameObjects[(b.i, b.j)] = new Explosion(b.i, b.j, owner ?? "");
 
-            for (int dj = 1; dj <= b.Power; dj++)
+            var directions = new List<(int, int)>() { (1, 0), (-1, 0), (0, 1), (0, -1) };
+
+            foreach (var (dx, dy) in directions)
             {
-                var stop = gameObjects.ContainsKey((b.i, b.j + dj)) && gameObjects[(b.i, b.j + dj)] is Wall;
-                AddExplosion(b.i, b.j + dj, owner);
+                var i = b.i + dx;
+                var j = b.j + dy;
+                for (int delta = 1; delta <= b.Power; delta++)
+                {
+                    var stop = gameObjects.ContainsKey((i, j)) && gameObjects[(i, j)].BlockExplosion;
+                    AddExplosion(i, j, owner);
 
-                if (stop)
-                    break;
-            }
+                    if (stop)
+                        break;
 
-            for (int dj = 1; dj <= b.Power; dj++)
-            {
-                var stop = gameObjects.ContainsKey((b.i, b.j - dj)) && gameObjects[(b.i, b.j - dj)] is Wall;
-                AddExplosion(b.i, b.j - dj, owner);
-
-                if (stop)
-                    break;
-            }
-
-            for (int di = 1; di <= b.Power; di++)
-            {
-                var stop = gameObjects.ContainsKey((b.i + di, b.j)) && gameObjects[(b.i + di, b.j)] is Wall;
-                AddExplosion(b.i + di, b.j, owner);
-
-                if (stop)
-                    break;
-            }
-
-            for (int di = 1; di <= b.Power; di++)
-            {
-                var stop = gameObjects.ContainsKey((b.i - di, b.j)) && gameObjects[(b.i - di, b.j)] is Wall;
-                AddExplosion(b.i - di, b.j, owner);
-
-                if (stop)
-                    break;
+                    i += dx;
+                    j += dy;
+                }
             }
         }
 
-        public bool CanStep(int i, int j, out GameObject? g)
+        private bool CanStep(int i, int j, out GameObject? g)
         {
             g = null;
 
@@ -488,15 +407,15 @@ namespace BomberMans
             else
                 return true;
 
-            return g is BombPowerBonus || g is LandMine || g is BuildBonus || g is SuperPowerBonus;
+            return g.PlayerCanStep;
         }
 
-        public bool IsValidEmptyCell(int i, int j)
+        private bool IsValidEmptyCell(int i, int j)
         {
             return IsValidCell(i, j) && !gameObjects.ContainsKey((i, j));
         }
 
-        public bool IsValidCell(int i, int j)
+        private bool IsValidCell(int i, int j)
         {
             return i >= 0 && i <= MapSize - 1 && j >= 0 && j <= MapSize - 1;
         }
@@ -514,7 +433,7 @@ namespace BomberMans
 
                 if (b.TimeRemain == 0)
                 {
-                    MakeBombExplosion(b);
+                    MakeBombExplosion(b, b.Owner);
                 }
             }
 
@@ -532,7 +451,7 @@ namespace BomberMans
 
                     if (p.TimeToRessurect == 0)
                     {
-                        RessurectPlayer(p.IP);
+                        ResurrectPlayer(p.IP);
                     }
                 }
             }
@@ -545,11 +464,14 @@ namespace BomberMans
                     p.SuperPowerTimeRemain = null;
             }
 
-            PlaceObjects(
+            MapGenerator.PlaceObjects(
+                gameObjects,
+                MapSize,
                 spawner.GetSpawnLandMinesCount(),
                 spawner.GetSpawnBuildsCount(),
                 spawner.GetSpawnPowdersCount(),
-                spawner.GetSpawnSuperPowerCount());
+                spawner.GetSpawnSuperPowerCount(),
+                spawner.GetSpawnDiamondsCount());
         }
 
         public GameObject?[,] GetMap()

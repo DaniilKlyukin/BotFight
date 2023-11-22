@@ -13,8 +13,10 @@
         {
             Owner = owner;
         }
-
-        public static Explosion Parse(string s)
+        public override bool PlayerCanStep => true;
+        public override bool Destructible => true;
+        public override bool BlockExplosion => false;
+        public static Explosion Read(string s)
         {
             return new Explosion(s);
         }

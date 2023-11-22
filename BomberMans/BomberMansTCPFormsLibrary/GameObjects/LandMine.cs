@@ -12,8 +12,10 @@
         {
 
         }
-
-        public static LandMine Parse(string s)
+        public override bool PlayerCanStep => true;
+        public override bool Destructible => true;
+        public override bool BlockExplosion => false;
+        public static LandMine Read(string s)
         {
             return new LandMine(s);
         }

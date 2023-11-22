@@ -38,13 +38,14 @@ namespace BomberMans
                 var data = Encoding.UTF8.GetString(e.Data);
 
                 var command = Command.ParseFromJson(data);
+                var ip = BomberMansTCPHelper.ParseIP(e.IpPort);
 
                 switch (command)
                 {
                     case SendPlayerNameCommand c:
                         {
-                            if (controller.ContainsPlayer(e.IpPort))
-                                controller.SetPlayerName(e.IpPort, c.Name);
+                            if (controller.ContainsPlayer(ip))
+                                controller.SetPlayerName(ip, c.Name);
 
                             if (!GameTimer.Enabled)
                             {
@@ -54,7 +55,7 @@ namespace BomberMans
                         break;
                     case SendPlayerActionCommand c:
                         {
-                            controller.AddAction(e.IpPort, c.Action);
+                            controller.AddAction(ip, c.Action);
                         }
                         break;
                 }
@@ -66,24 +67,29 @@ namespace BomberMans
         }
 
         private void ClientDisconnected(object? sender, ConnectionEventArgs e)
-        {
+        {/*
             controller.RemovePlayer(e.IpPort);
 
             if (!GameTimer.Enabled)
             {
                 Invoke(VisualizationUpdate);
-            }
+            }*/
         }
 
         private void ClientConnected(object? sender, ConnectionEventArgs e)
         {
-            if (bannedPlayers.Contains(e.IpPort))
+            var ip = BomberMansTCPHelper.ParseIP(e.IpPort);
+
+            if (bannedPlayers.Contains(ip))
             {
-                server.DisconnectClient(e.IpPort);
+                server.DisconnectClient(ip);
                 return;
             }
 
-            controller.AddPlayer(e.IpPort, e.IpPort);
+            if (controller.ContainsPlayer(ip))
+                return;
+
+            controller.AddPlayer(ip, ip);
 
             if (!GameTimer.Enabled)
             {
@@ -108,12 +114,12 @@ namespace BomberMans
 
         private void CreateLevel_Click(object sender, EventArgs e)
         {
-            controller.SetupRandomLevel(MapSize);
+            controller.GenerateRandomMap(MapSize);
             Invoke(VisualizationUpdate);
         }
 
         private void StartButton_Click(object sender, EventArgs e)
-        {            
+        {
             GameTimer.Start();
         }
 
@@ -165,6 +171,7 @@ namespace BomberMans
             {
                 var player = (PlayerInfo)item;
                 bannedPlayers.Add(player.IP);
+                controller.RemovePlayer(player.IP);
                 server.DisconnectClient(player.IP);
             }
         }

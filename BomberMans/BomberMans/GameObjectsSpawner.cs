@@ -6,17 +6,23 @@ namespace BomberMans
     {
         static Random rnd = new Random();
 
-        public double PowderBonusMean { get; set; } = 0.8;
-        public double PowderBonusStd { get; set; } = 0.8;
+        public double PowderBonusMean { get; set; } = 0.9;
+        public double PowderBonusStd { get; set; } = 0.95;
 
-        public double BuildBonusMean { get; set; } = 0.5;
+        public double DiamondMean { get; set; } = 0.15;
+        public double DiamondStd { get; set; } = 0.3;
+
+        public double BuildBonusMean { get; set; } = 0.45;
         public double BuildBonusStd { get; set; } = 0.3;
 
-        public double LandMineMean { get; set; } = 1;
-        public double LandMineStd { get; set; } = 1;
+        public double LandMineMean { get; set; } = 0.8;
+        public double LandMineStd { get; set; } = 0.8;
 
         public double SuperPowerMean { get; set; } = 0.3;
         public double SuperPowerStd { get; set; } = 0.3;
+
+        public double WallSpawnProbability { get; set; } = 0.2;
+        public double HeavyWallSpawnProbability { get; set; } = 0.2;
 
         private int GetSpawnCount(double mean, double std)
         {
@@ -31,5 +37,6 @@ namespace BomberMans
         public int GetSpawnBuildsCount() => GetSpawnCount(BuildBonusMean, BuildBonusStd);
         public int GetSpawnLandMinesCount() => GetSpawnCount(LandMineMean, LandMineStd);
         public int GetSpawnSuperPowerCount() => GetSpawnCount(SuperPowerMean, SuperPowerStd);
+        public int GetSpawnDiamondsCount() => GetSpawnCount(DiamondMean, DiamondStd);
     }
 }
