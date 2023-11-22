@@ -76,7 +76,7 @@ namespace BomberMansTCPFormsLibrary
                     return CombineImages(cellSize, Resource.Grass, Resource.Bomb);
                 case Explosion:
                     return CombineImages(cellSize, Resource.Grass, Resource.Explosion);
-                case BombPowerBonus:
+                case Powder:
                     return CombineImages(cellSize, Resource.Grass, Resource.Powder);
                 case LandMine:
                     return CombineImages(cellSize, Resource.Grass, Resource.Mine);

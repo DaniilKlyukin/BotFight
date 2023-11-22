@@ -206,10 +206,10 @@ namespace BomberMans
 
             gameObjects.Add((i0 + di, j0 + dj), p);
 
-            if (g is BombPowerBonus)
+            if (g is Powder)
             {
                 p.BombPowerModificator++;
-                p.Score += BombPowerBonus.Score;
+                p.Score += Powder.Score;
             }
             else if (g is Diamond)
             {

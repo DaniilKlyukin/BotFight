@@ -91,7 +91,7 @@ namespace BomberMans
                 }
                 else if (powderCount > 0)
                 {
-                    map.Add((i, j), new BombPowerBonus(i, j));
+                    map.Add((i, j), new Powder(i, j));
                     powderCount--;
                 }
                 else if (superPowerCount > 0)

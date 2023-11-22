@@ -24,7 +24,7 @@ namespace BomberMansTCPFormsLibrary
             var wallsString = new StringBuilder();
             var heavyWalls = new StringBuilder();
             var explosions = new StringBuilder();
-            var bombPower = new StringBuilder();
+            var powders = new StringBuilder();
             var bombs = new StringBuilder();
             var builds = new StringBuilder();
             var players = new StringBuilder();
@@ -40,7 +40,7 @@ namespace BomberMansTCPFormsLibrary
                         case Wall: wallsString.Append($"{i},{j};"); break;
                         case HeavyWall: heavyWalls.Append($"{i},{j};"); break;
                         case Explosion: explosions.Append($"{i},{j};"); break;
-                        case BombPowerBonus: bombPower.Append($"{i},{j};"); break;
+                        case Powder: powders.Append($"{i},{j};"); break;
                         case BuildBonus: builds.Append($"{i},{j};"); break;
                         case SuperPowerBonus: superPower.Append($"{i},{j};"); break;
                         case LandMine: mines.Append($"{i},{j};"); break;
@@ -68,7 +68,7 @@ namespace BomberMansTCPFormsLibrary
             json["Map"]["Walls"] = wallsString.ToString();
             json["Map"]["HWalls"] = heavyWalls.ToString();
             json["Map"]["Explosions"] = explosions.ToString();
-            json["Map"]["BPowder"] = bombPower.ToString();
+            json["Map"]["Powder"] = powders.ToString();
             json["Map"]["Builds"] = builds.ToString();
             json["Map"]["Mines"] = mines.ToString();
             json["Map"]["Bombs"] = bombs.ToString();
@@ -101,7 +101,7 @@ namespace BomberMansTCPFormsLibrary
             ReadGameObjectToMap<Wall>(json, map, "Walls");
             ReadGameObjectToMap<HeavyWall>(json, map, "HWalls");
             ReadGameObjectToMap<Explosion>(json, map, "Explosions");
-            ReadGameObjectToMap<BombPowerBonus>(json, map, "BPowder");
+            ReadGameObjectToMap<Powder>(json, map, "Powder");
             ReadGameObjectToMap<BuildBonus>(json, map, "Builds");
             ReadGameObjectToMap<LandMine>(json, map, "Mines");
             ReadGameObjectToMap<Bomb>(json, map, "Bombs");
