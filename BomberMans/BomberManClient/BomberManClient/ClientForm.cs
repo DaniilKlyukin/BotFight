@@ -17,8 +17,8 @@ namespace BomberManClient
 
             c.UpdatePlayersInfo = (info) =>
             {
-                Invoke(() => BomberMansTCPHelper.UpdatePlayersListBox(
-                    playersListBox, info));
+                Invoke(() => BomberMansTCPHelper.UpdatePlayersDataGrid(
+                    playersDataGridView, info));
             };
 
             c.Visualize = (map) =>
@@ -28,7 +28,7 @@ namespace BomberManClient
 
             c.SendPlayerAction = DoWork;
 
-            c.Connect("192.168.0.5:9000", PlayerName);
+            c.Connect("192.168.0.194:9000", PlayerName);
         }
 
         public PlayerAction DoWork(GameObject?[,] map)

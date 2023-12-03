@@ -106,13 +106,15 @@ namespace BomberMansTCPFormsLibrary
             return result;
         }
 
-        public static void UpdatePlayersListBox(ListBox playersListBox, IList<PlayerInfo> playersInfo)
+        public static void UpdatePlayersDataGrid(DataGridView playersDataGrid, IList<PlayerInfo> playersInfo)
         {
-            playersListBox.Items.Clear();
+            playersDataGrid.Rows.Clear();
 
+            var position = 1;
             foreach (var p in playersInfo.OrderByDescending(p => p.Score))
             {
-                playersListBox.Items.Add(p);
+                playersDataGrid.Rows.Add(new object[] { position, p, p.Score });
+                position++;
             }
         }
     }

@@ -467,6 +467,8 @@ namespace BomberMans
                 spawner.GetSpawnPowdersCount(),
                 spawner.GetSpawnSuperPowerCount(),
                 spawner.GetSpawnDiamondsCount());
+
+            actions.Clear();
         }
 
         public GameObject?[,] GetMap()

@@ -103,8 +103,8 @@ namespace BomberMans
         private void VisualizationUpdate()
         {
             BomberMansTCPHelper.DrawMap(pictureBox, controller.GetMap(), null, CellSize);
-            BomberMansTCPHelper.UpdatePlayersListBox(
-                playersListBox,
+            BomberMansTCPHelper.UpdatePlayersDataGrid(
+                playersDataGridView,
                 GetPlayerInfos());
         }
 
@@ -157,25 +157,32 @@ namespace BomberMans
 
         private void kickPlayerButton_Click(object sender, EventArgs e)
         {
-            var selectedPlayers = playersListBox.SelectedItems;
-
-            foreach (var item in selectedPlayers)
+            foreach (DataGridViewRow r in playersDataGridView.SelectedRows)
             {
-                var player = (PlayerInfo)item;
+                var player = (PlayerInfo)r.Cells[1].Value;
+                controller.RemovePlayer(player.IP);
                 server.DisconnectClient(player.IP);
+            }
+
+            if (!GameTimer.Enabled)
+            {
+                Invoke(VisualizationUpdate);
             }
         }
 
         private void banPlayerButton_Click(object sender, EventArgs e)
         {
-            var selectedPlayers = playersListBox.SelectedItems;
-
-            foreach (var item in selectedPlayers)
+            foreach (DataGridViewRow r in playersDataGridView.SelectedRows)
             {
-                var player = (PlayerInfo)item;
+                var player = (PlayerInfo)r.Cells[1].Value;
                 bannedPlayers.Add(player.IP);
                 controller.RemovePlayer(player.IP);
                 server.DisconnectClient(player.IP);
+            }
+
+            if (!GameTimer.Enabled)
+            {
+                Invoke(VisualizationUpdate);
             }
         }
 
@@ -215,8 +222,17 @@ namespace BomberMans
                 case Keys.F6: controller.PlaceGameObject(new BuildBonus(i, j)); break;
                 case Keys.F7: controller.PlaceGameObject(new SuperPowerBonus(i, j)); break;
                 case Keys.F8: controller.PlaceGameObject(new Bomb(i, j, 3, 3, "")); break;
-                case Keys.F9: controller.PlaceGameObject(new Player(i, j, $"{rnd.Next(255)}.{rnd.Next(255)}.{rnd.Next(255)}.{rnd.Next(255)}", $"Dummy {rnd.Next(1000)}", 0, 3)); break;
+               // case Keys.F9: controller.PlaceGameObject(new Player(i, j, $"Dummy", $"Dummy", 0, 0)); break;
+                case Keys.F9: controller.PlaceGameObject(new Player(i, j, $"{rnd.Next(255)}.{rnd.Next(255)}.{rnd.Next(255)}.{rnd.Next(255)}", $"Player {rnd.Next(1000)}", 0, 0)); break;
                 case Keys.F12: controller.RemoveGameObject(i, j); break;
+                case Keys.Left: controller.AddAction("Dummy", PlayerAction.Left); break;
+                case Keys.Right: controller.AddAction("Dummy", PlayerAction.Right); break;
+                case Keys.Down: controller.AddAction("Dummy", PlayerAction.Bottom); break;
+                case Keys.Up: controller.AddAction("Dummy", PlayerAction.Top); break;
+                case Keys.NumPad4: controller.AddAction("Dummy", PlayerAction.BombLeft); break;
+                case Keys.NumPad6: controller.AddAction("Dummy", PlayerAction.BombRight); break;
+                case Keys.NumPad2: controller.AddAction("Dummy", PlayerAction.BombBottom); break;
+                case Keys.NumPad8: controller.AddAction("Dummy", PlayerAction.BombTop); break;
             }
 
             if (!GameTimer.Enabled)

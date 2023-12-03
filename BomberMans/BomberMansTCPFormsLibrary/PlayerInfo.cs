@@ -4,8 +4,7 @@
     {
         public override string? ToString()
         {
-            var isAliveStr = IsAlive ? "[Жив]" : "[Мертв]";
-            return $"{Name}: {Score} {isAliveStr}";
+            return Name;
         }
     }
 }

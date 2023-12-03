@@ -29,8 +29,10 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameForm));
-            playersListBox = new ListBox();
             playerContextMenu = new ContextMenuStrip(components);
             kickPlayerButton = new ToolStripMenuItem();
             banPlayerButton = new ToolStripMenuItem();
@@ -44,6 +46,10 @@
             DeveloperButtom = new ToolStripMenuItem();
             pictureBox = new PictureBox();
             splitContainer = new SplitContainer();
+            playersDataGridView = new DataGridView();
+            PositionColumn = new DataGridViewTextBoxColumn();
+            NameColumn = new DataGridViewTextBoxColumn();
+            ScoreColumn = new DataGridViewTextBoxColumn();
             playerContextMenu.SuspendLayout();
             menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
@@ -51,19 +57,8 @@
             splitContainer.Panel1.SuspendLayout();
             splitContainer.Panel2.SuspendLayout();
             splitContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)playersDataGridView).BeginInit();
             SuspendLayout();
-            // 
-            // playersListBox
-            // 
-            playersListBox.ContextMenuStrip = playerContextMenu;
-            playersListBox.Dock = DockStyle.Fill;
-            playersListBox.Font = new Font("Bookman Old Style", 20.25F, FontStyle.Regular, GraphicsUnit.Point);
-            playersListBox.FormattingEnabled = true;
-            playersListBox.ItemHeight = 32;
-            playersListBox.Location = new Point(0, 0);
-            playersListBox.Name = "playersListBox";
-            playersListBox.Size = new Size(423, 877);
-            playersListBox.TabIndex = 0;
             // 
             // playerContextMenu
             // 
@@ -96,7 +91,7 @@
             menuStrip.Items.AddRange(new ToolStripItem[] { играToolStripMenuItem, параметрыToolStripMenuItem });
             menuStrip.Location = new Point(0, 0);
             menuStrip.Name = "menuStrip";
-            menuStrip.Size = new Size(1314, 28);
+            menuStrip.Size = new Size(1577, 28);
             menuStrip.TabIndex = 2;
             menuStrip.Text = "menuStrip1";
             // 
@@ -147,7 +142,7 @@
             pictureBox.Dock = DockStyle.Fill;
             pictureBox.Location = new Point(0, 0);
             pictureBox.Name = "pictureBox";
-            pictureBox.Size = new Size(879, 877);
+            pictureBox.Size = new Size(1033, 877);
             pictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
             pictureBox.TabIndex = 0;
             pictureBox.TabStop = false;
@@ -165,18 +160,76 @@
             // 
             // splitContainer.Panel2
             // 
-            splitContainer.Panel2.Controls.Add(playersListBox);
-            splitContainer.Size = new Size(1314, 877);
-            splitContainer.SplitterDistance = 879;
+            splitContainer.Panel2.Controls.Add(playersDataGridView);
+            splitContainer.Size = new Size(1577, 877);
+            splitContainer.SplitterDistance = 1033;
             splitContainer.SplitterWidth = 12;
             splitContainer.TabIndex = 4;
             splitContainer.PreviewKeyDown += splitContainer_PreviewKeyDown;
+            // 
+            // playersDataGridView
+            // 
+            playersDataGridView.AllowUserToAddRows = false;
+            playersDataGridView.AllowUserToDeleteRows = false;
+            playersDataGridView.BackgroundColor = SystemColors.Control;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
+            dataGridViewCellStyle1.Font = new Font("Bookman Old Style", 24F, FontStyle.Bold, GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            playersDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            playersDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            playersDataGridView.Columns.AddRange(new DataGridViewColumn[] { PositionColumn, NameColumn, ScoreColumn });
+            playersDataGridView.ContextMenuStrip = playerContextMenu;
+            playersDataGridView.Dock = DockStyle.Fill;
+            playersDataGridView.Location = new Point(0, 0);
+            playersDataGridView.Name = "playersDataGridView";
+            playersDataGridView.ReadOnly = true;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Control;
+            dataGridViewCellStyle2.Font = new Font("Bookman Old Style", 21.75F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            playersDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle3.Font = new Font("Bookman Old Style", 21.75F, FontStyle.Regular, GraphicsUnit.Point);
+            playersDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            playersDataGridView.RowTemplate.Height = 40;
+            playersDataGridView.Size = new Size(532, 877);
+            playersDataGridView.TabIndex = 1;
+            // 
+            // PositionColumn
+            // 
+            PositionColumn.HeaderText = "#";
+            PositionColumn.Name = "PositionColumn";
+            PositionColumn.ReadOnly = true;
+            PositionColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
+            // 
+            // NameColumn
+            // 
+            NameColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            NameColumn.HeaderText = "Игрок";
+            NameColumn.Name = "NameColumn";
+            NameColumn.ReadOnly = true;
+            NameColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
+            // 
+            // ScoreColumn
+            // 
+            ScoreColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            ScoreColumn.HeaderText = "Очки";
+            ScoreColumn.Name = "ScoreColumn";
+            ScoreColumn.ReadOnly = true;
+            ScoreColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
+            ScoreColumn.Width = 113;
             // 
             // GameForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1314, 905);
+            ClientSize = new Size(1577, 905);
             Controls.Add(splitContainer);
             Controls.Add(menuStrip);
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -191,13 +244,13 @@
             splitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainer).EndInit();
             splitContainer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)playersDataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private ListBox playersListBox;
         private System.Windows.Forms.Timer GameTimer;
         private MenuStrip menuStrip;
         private ToolStripMenuItem играToolStripMenuItem;
@@ -211,5 +264,9 @@
         private ToolStripMenuItem banPlayerButton;
         private ToolStripMenuItem параметрыToolStripMenuItem;
         private ToolStripMenuItem DeveloperButtom;
+        private DataGridView playersDataGridView;
+        private DataGridViewTextBoxColumn PositionColumn;
+        private DataGridViewTextBoxColumn NameColumn;
+        private DataGridViewTextBoxColumn ScoreColumn;
     }
 }

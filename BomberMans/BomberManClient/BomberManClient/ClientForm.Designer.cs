@@ -28,15 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClientForm));
             splitContainer = new SplitContainer();
             pictureBox = new PictureBox();
-            playersListBox = new ListBox();
+            playersDataGridView = new DataGridView();
+            PositionColumn = new DataGridViewTextBoxColumn();
+            NameColumn = new DataGridViewTextBoxColumn();
+            ScoreColumn = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)splitContainer).BeginInit();
             splitContainer.Panel1.SuspendLayout();
             splitContainer.Panel2.SuspendLayout();
             splitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)playersDataGridView).BeginInit();
             SuspendLayout();
             // 
             // splitContainer
@@ -52,7 +59,7 @@
             // 
             // splitContainer.Panel2
             // 
-            splitContainer.Panel2.Controls.Add(playersListBox);
+            splitContainer.Panel2.Controls.Add(playersDataGridView);
             splitContainer.Size = new Size(1196, 731);
             splitContainer.SplitterDistance = 799;
             splitContainer.SplitterWidth = 12;
@@ -68,16 +75,62 @@
             pictureBox.TabIndex = 0;
             pictureBox.TabStop = false;
             // 
-            // playersListBox
+            // playersDataGridView
             // 
-            playersListBox.Dock = DockStyle.Fill;
-            playersListBox.Font = new Font("Bookman Old Style", 20.25F, FontStyle.Regular, GraphicsUnit.Point);
-            playersListBox.FormattingEnabled = true;
-            playersListBox.ItemHeight = 32;
-            playersListBox.Location = new Point(0, 0);
-            playersListBox.Name = "playersListBox";
-            playersListBox.Size = new Size(385, 731);
-            playersListBox.TabIndex = 0;
+            playersDataGridView.AllowUserToAddRows = false;
+            playersDataGridView.AllowUserToDeleteRows = false;
+            playersDataGridView.BackgroundColor = SystemColors.Control;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
+            dataGridViewCellStyle1.Font = new Font("Bookman Old Style", 24F, FontStyle.Bold, GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            playersDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            playersDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            playersDataGridView.Columns.AddRange(new DataGridViewColumn[] { PositionColumn, NameColumn, ScoreColumn });
+            playersDataGridView.Dock = DockStyle.Fill;
+            playersDataGridView.Location = new Point(0, 0);
+            playersDataGridView.Name = "playersDataGridView";
+            playersDataGridView.ReadOnly = true;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Control;
+            dataGridViewCellStyle2.Font = new Font("Bookman Old Style", 21.75F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            playersDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle3.Font = new Font("Bookman Old Style", 21.75F, FontStyle.Regular, GraphicsUnit.Point);
+            playersDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            playersDataGridView.RowTemplate.Height = 40;
+            playersDataGridView.Size = new Size(385, 731);
+            playersDataGridView.TabIndex = 2;
+            // 
+            // PositionColumn
+            // 
+            PositionColumn.HeaderText = "#";
+            PositionColumn.Name = "PositionColumn";
+            PositionColumn.ReadOnly = true;
+            PositionColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
+            // 
+            // NameColumn
+            // 
+            NameColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            NameColumn.HeaderText = "Игрок";
+            NameColumn.Name = "NameColumn";
+            NameColumn.ReadOnly = true;
+            NameColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
+            // 
+            // ScoreColumn
+            // 
+            ScoreColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            ScoreColumn.HeaderText = "Очки";
+            ScoreColumn.Name = "ScoreColumn";
+            ScoreColumn.ReadOnly = true;
+            ScoreColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
+            ScoreColumn.Width = 113;
             // 
             // ClientForm
             // 
@@ -94,6 +147,7 @@
             ((System.ComponentModel.ISupportInitialize)splitContainer).EndInit();
             splitContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)playersDataGridView).EndInit();
             ResumeLayout(false);
         }
 
@@ -101,6 +155,9 @@
 
         private SplitContainer splitContainer;
         private PictureBox pictureBox;
-        private ListBox playersListBox;
+        private DataGridView playersDataGridView;
+        private DataGridViewTextBoxColumn PositionColumn;
+        private DataGridViewTextBoxColumn NameColumn;
+        private DataGridViewTextBoxColumn ScoreColumn;
     }
 }
