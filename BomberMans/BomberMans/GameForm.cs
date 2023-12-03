@@ -2,17 +2,20 @@ using SuperSimpleTcp;
 using BomberMansTCPFormsLibrary;
 using System.Diagnostics;
 using System.Text;
+using BomberMansTCPFormsLibrary.GameObjects;
 
 namespace BomberMans
 {
 
     public partial class GameForm : Form
     {
+        bool developerMode = false;
         SimpleTcpServer server;
         GameController controller;
         const int CellSize = 24;
         const int MapSize = 40;
         HashSet<string> bannedPlayers = new HashSet<string>();
+        static Random rnd = new Random();
 
         public GameForm()
         {
@@ -173,6 +176,52 @@ namespace BomberMans
                 bannedPlayers.Add(player.IP);
                 controller.RemovePlayer(player.IP);
                 server.DisconnectClient(player.IP);
+            }
+        }
+
+        private void DeveloperButtom_Click(object sender, EventArgs e)
+        {
+            developerMode = !developerMode;
+            DeveloperButtom.BackColor = developerMode ? Color.Green : Color.FromArgb(255, 240, 240, 240);
+        }
+
+        private void splitContainer_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (!developerMode)
+                return;
+
+            //F1 - heavy wall, F2 - wall, F3 - powder, F4 - mine, F5 - diamond, F6 - build, F7 - super power, F8 - bomb, F9 - dummy, F12 - delete
+
+            var relativePoint = pictureBox.PointToClient(Cursor.Position);
+
+            var x = relativePoint.X;
+            var y = relativePoint.Y;
+
+            var j = x / CellSize;
+            var i = y / CellSize;
+
+            if (i < 0 || j < 0 || i >= controller.MapSize || j >= controller.MapSize)
+            {
+                return;
+            }
+
+            switch (e.KeyCode)
+            {
+                case Keys.F1: controller.PlaceGameObject(new HeavyWall(i, j)); break;
+                case Keys.F2: controller.PlaceGameObject(new Wall(i, j)); break;
+                case Keys.F3: controller.PlaceGameObject(new Powder(i, j)); break;
+                case Keys.F4: controller.PlaceGameObject(new LandMine(i, j)); break;
+                case Keys.F5: controller.PlaceGameObject(new Diamond(i, j)); break;
+                case Keys.F6: controller.PlaceGameObject(new BuildBonus(i, j)); break;
+                case Keys.F7: controller.PlaceGameObject(new SuperPowerBonus(i, j)); break;
+                case Keys.F8: controller.PlaceGameObject(new Bomb(i, j, 3, 3, "")); break;
+                case Keys.F9: controller.PlaceGameObject(new Player(i, j, $"{rnd.Next(255)}.{rnd.Next(255)}.{rnd.Next(255)}.{rnd.Next(255)}", $"Dummy {rnd.Next(1000)}", 0, 3)); break;
+                case Keys.F12: controller.RemoveGameObject(i, j); break;
+            }
+
+            if (!GameTimer.Enabled)
+            {
+                Invoke(VisualizationUpdate);
             }
         }
     }

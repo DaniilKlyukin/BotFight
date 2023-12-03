@@ -8,7 +8,8 @@ namespace BomberMans
     {
         Dictionary<string, Player> players { get; set; } = new();
         Dictionary<(int, int), GameObject> gameObjects = new();
-        Dictionary<string, PlayerAction> actions = new();
+        //Время необходимо, чтобы отслеживать кто прислал ответ первый
+        Dictionary<string, (DateTime, PlayerAction)> actions = new();
 
         public int? RessurectionTime { get; set; } = null;
 
@@ -20,7 +21,7 @@ namespace BomberMans
         {
             MapSize = mapSize;
             gameObjects = new Dictionary<(int, int), GameObject>();
-            actions = new Dictionary<string, PlayerAction>();
+            actions = new Dictionary<string, (DateTime, PlayerAction)>();
         }
 
         public void GenerateRandomMap(int mapSize = 40)
@@ -75,9 +76,9 @@ namespace BomberMans
                 return;
 
             if (actions.ContainsKey(ip))
-                actions[ip] = act;
+                actions[ip] = (DateTime.Now, act);
             else
-                actions.Add(ip, act);
+                actions.Add(ip, (DateTime.Now, act));
         }
 
         public bool ContainsPlayer(string ipPort)
@@ -172,8 +173,6 @@ namespace BomberMans
         {
             switch (act)
             {
-                case PlayerAction.None:
-                    break;
                 case PlayerAction.Left: MovePlayer(ip, 0, -1); break;
                 case PlayerAction.Right: MovePlayer(ip, 0, 1); break;
                 case PlayerAction.Top: MovePlayer(ip, -1, 0); break;
@@ -182,8 +181,6 @@ namespace BomberMans
                 case PlayerAction.BombRight: BombAction(ip, 0, 1); break;
                 case PlayerAction.BombTop: BombAction(ip, -1, 0); break;
                 case PlayerAction.BombBottom: BombAction(ip, 1, 0); break;
-                default:
-                    break;
             }
         }
 
@@ -300,7 +297,7 @@ namespace BomberMans
 
                     if (go is Bomb b)
                     {
-                        MakeBombExplosion(b, owner);
+                        MakeBombExplosion(b, b.TimeRemain == 0 ? b.Owner : owner);
                     }
                     else if (go is LandMine m)
                     {
@@ -424,20 +421,18 @@ namespace BomberMans
         {
             gameObjects = gameObjects.Where(g => g.Value is not Explosion).ToDictionary(g => g.Key, g => g.Value);
 
-            var bombs = gameObjects.Where(g => g.Value is Bomb).ToList();
-            foreach (var ((i, j), g) in bombs)
+            var bombs = gameObjects.Select(g => g.Value).OfType<Bomb>().ToList();
+            foreach (var b in bombs)
             {
-                var b = (Bomb)g;
-
                 b.Tick();
-
-                if (b.TimeRemain == 0)
-                {
-                    MakeBombExplosion(b, b.Owner);
-                }
             }
 
-            foreach (var (ip, act) in actions)
+            foreach (var b in bombs.Where(b => b.TimeRemain == 0))
+            {
+                MakeBombExplosion(b, b.Owner);
+            }
+
+            foreach (var (ip, (time, act)) in actions.OrderBy(v => v.Value.Item1))
             {
                 if (players.ContainsKey(ip) && players[ip].IsAlive)
                     DoPlayerAction(ip, act);
@@ -494,6 +489,22 @@ namespace BomberMans
         public IList<Player> GetPlayers()
         {
             return players.Values.ToList();
+        }
+
+        public void PlaceGameObject(GameObject go)
+        {
+            if (!gameObjects.ContainsKey((go.i, go.j)))
+            {
+                gameObjects.Add((go.i, go.j), go);
+
+                if (go is Player p)
+                    players.Add(p.IP, p);
+            }
+        }
+
+        public void RemoveGameObject(int i, int j)
+        {
+            gameObjects.Remove((i, j));
         }
     }
 }

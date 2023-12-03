@@ -40,6 +40,8 @@
             CreateLevel = new ToolStripMenuItem();
             StartButton = new ToolStripMenuItem();
             StopButton = new ToolStripMenuItem();
+            параметрыToolStripMenuItem = new ToolStripMenuItem();
+            DeveloperButtom = new ToolStripMenuItem();
             pictureBox = new PictureBox();
             splitContainer = new SplitContainer();
             playerContextMenu.SuspendLayout();
@@ -91,7 +93,7 @@
             // menuStrip
             // 
             menuStrip.Font = new Font("Bookman Old Style", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            menuStrip.Items.AddRange(new ToolStripItem[] { играToolStripMenuItem });
+            menuStrip.Items.AddRange(new ToolStripItem[] { играToolStripMenuItem, параметрыToolStripMenuItem });
             menuStrip.Location = new Point(0, 0);
             menuStrip.Name = "menuStrip";
             menuStrip.Size = new Size(1314, 28);
@@ -126,6 +128,20 @@
             StopButton.Text = "Остановить";
             StopButton.Click += StopButton_Click;
             // 
+            // параметрыToolStripMenuItem
+            // 
+            параметрыToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { DeveloperButtom });
+            параметрыToolStripMenuItem.Name = "параметрыToolStripMenuItem";
+            параметрыToolStripMenuItem.Size = new Size(114, 24);
+            параметрыToolStripMenuItem.Text = "Параметры";
+            // 
+            // DeveloperButtom
+            // 
+            DeveloperButtom.Name = "DeveloperButtom";
+            DeveloperButtom.Size = new Size(249, 24);
+            DeveloperButtom.Text = "Режим разработчика";
+            DeveloperButtom.Click += DeveloperButtom_Click;
+            // 
             // pictureBox
             // 
             pictureBox.Dock = DockStyle.Fill;
@@ -154,6 +170,7 @@
             splitContainer.SplitterDistance = 879;
             splitContainer.SplitterWidth = 12;
             splitContainer.TabIndex = 4;
+            splitContainer.PreviewKeyDown += splitContainer_PreviewKeyDown;
             // 
             // GameForm
             // 
@@ -192,5 +209,7 @@
         private ContextMenuStrip playerContextMenu;
         private ToolStripMenuItem kickPlayerButton;
         private ToolStripMenuItem banPlayerButton;
+        private ToolStripMenuItem параметрыToolStripMenuItem;
+        private ToolStripMenuItem DeveloperButtom;
     }
 }
