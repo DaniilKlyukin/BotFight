@@ -25,29 +25,33 @@
 * Препятствует передвижению </br>
 * Можно уничтожить </br>
 * Защищает от взрыва, после чего разрушается (см. подробности в п. "Мина", "Бомба" и "Суперсила") </br>
-![image](https://github.com/KaBaN4iK357/BotFight/assets/32903150/cb543bec-81e9-4004-a3cd-960eba0ce876)
+![image](https://github.com/KaBaN4iK357/BotFight/assets/32903150/cb543bec-81e9-4004-a3cd-960eba0ce876) </br>
 #### Порох
-![Powder](https://github.com/KaBaN4iK357/BotFight/assets/32903150/46363242-0258-4abe-88dd-f1899e653af1)
+![Powder](https://github.com/KaBaN4iK357/BotFight/assets/32903150/46363242-0258-4abe-88dd-f1899e653af1) </br>
 <b>Свойства объекта:</b></br>
 * Может быть подобран игроком (дает 1 очко) </br>
 * Можно уничтожить взрывом </br>
 #### Мина
-![mine](https://github.com/KaBaN4iK357/BotFight/assets/32903150/8390e934-c646-49c9-82fb-2d9514def9ab)
-
+![mine](https://github.com/KaBaN4iK357/BotFight/assets/32903150/8390e934-c646-49c9-82fb-2d9514def9ab) </br>
+<b>Свойства объекта:</b></br>
+* Взрывается если игрок наступил </br>
+* Можно подорвать взрывом </br>
+* Игрок, который подорвал мину (наступив или взорвав) считается инициатором взрыва </br>
+* Если мина подорвала игрока, то очки начисляются инициатору взрыва </br>
 #### Алмаз
-![Diamond](https://github.com/KaBaN4iK357/BotFight/assets/32903150/006d05da-f673-4560-82fd-64c95b7d7410)
+![Diamond](https://github.com/KaBaN4iK357/BotFight/assets/32903150/006d05da-f673-4560-82fd-64c95b7d7410) </br>
 
 #### Бонус "Постройка"
-![build](https://github.com/KaBaN4iK357/BotFight/assets/32903150/8bf2df35-2a86-44f6-a4d4-1732edb0d196)
+![build](https://github.com/KaBaN4iK357/BotFight/assets/32903150/8bf2df35-2a86-44f6-a4d4-1732edb0d196) </br>
 
 #### Суперсила
-![SuperPower](https://github.com/KaBaN4iK357/BotFight/assets/32903150/013bbf55-dddb-4263-be72-9135ef3c86f1)
+![SuperPower](https://github.com/KaBaN4iK357/BotFight/assets/32903150/013bbf55-dddb-4263-be72-9135ef3c86f1) </br>
 
 #### Бомба
-![bomb](https://github.com/KaBaN4iK357/BotFight/assets/32903150/952e6218-2d99-4820-b00c-c70161a7b844)
+![bomb](https://github.com/KaBaN4iK357/BotFight/assets/32903150/952e6218-2d99-4820-b00c-c70161a7b844) </br>
 
 #### Игрок
-![player](https://github.com/KaBaN4iK357/BotFight/assets/32903150/7d5a8e9b-bf36-4b01-be9d-2fbd723a4183)
+![player](https://github.com/KaBaN4iK357/BotFight/assets/32903150/7d5a8e9b-bf36-4b01-be9d-2fbd723a4183) </br>
 
 ### Возможные действия
 
