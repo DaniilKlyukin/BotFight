@@ -86,7 +86,7 @@
 * Устанавливается игроком </br>
 * Взрывается на 5-й ход после размещения </br>
 * Радиус взрыва по умолчанию равен 2 клетки </br>
-![image](https://github.com/KaBaN4iK357/BotFight/assets/32903150/01fef296-8f59-4d7f-a066-80adbcd5ec1b)
+![image](https://github.com/KaBaN4iK357/BotFight/assets/32903150/448b7211-7c61-429a-8bd9-d07a510e3533)
 
 #### Игрок
 ![player](https://github.com/KaBaN4iK357/BotFight/assets/32903150/7d5a8e9b-bf36-4b01-be9d-2fbd723a4183) </br>
