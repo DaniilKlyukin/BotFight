@@ -18,16 +18,36 @@
 * Препятствует передвижению </br>
 * Нельзя уничтожить </br>
 * Защищает от взрывов (см. подробности в п. "Мина", "Бомба" и "Суперсила") </br>
-![image](https://github.com/KaBaN4iK357/BotFight/assets/32903150/24a8d926-8912-4c72-8941-d51c96277850)
-
+![image](https://github.com/KaBaN4iK357/BotFight/assets/32903150/24a8d926-8912-4c72-8941-d51c96277850) </br>
 #### Обычная стена
+![Wall](https://github.com/KaBaN4iK357/BotFight/assets/32903150/8ffa6779-cb72-41d3-b4f7-3f3cb29dcedf) </br>
+<b>Свойства объекта:</b></br>
+* Препятствует передвижению </br>
+* Можно уничтожить </br>
+* Защищает от взрыва, после чего разрушается (см. подробности в п. "Мина", "Бомба" и "Суперсила") </br>
+![image](https://github.com/KaBaN4iK357/BotFight/assets/32903150/cb543bec-81e9-4004-a3cd-960eba0ce876)
 #### Порох
+![Powder](https://github.com/KaBaN4iK357/BotFight/assets/32903150/46363242-0258-4abe-88dd-f1899e653af1)
+<b>Свойства объекта:</b></br>
+* Может быть подобран игроком (дает 1 очко) </br>
+* Можно уничтожить взрывом </br>
 #### Мина
+![mine](https://github.com/KaBaN4iK357/BotFight/assets/32903150/8390e934-c646-49c9-82fb-2d9514def9ab)
+
 #### Алмаз
+![Diamond](https://github.com/KaBaN4iK357/BotFight/assets/32903150/006d05da-f673-4560-82fd-64c95b7d7410)
+
 #### Бонус "Постройка"
+![build](https://github.com/KaBaN4iK357/BotFight/assets/32903150/8bf2df35-2a86-44f6-a4d4-1732edb0d196)
+
 #### Суперсила
+![SuperPower](https://github.com/KaBaN4iK357/BotFight/assets/32903150/013bbf55-dddb-4263-be72-9135ef3c86f1)
+
 #### Бомба
+![bomb](https://github.com/KaBaN4iK357/BotFight/assets/32903150/952e6218-2d99-4820-b00c-c70161a7b844)
+
 #### Игрок
+![player](https://github.com/KaBaN4iK357/BotFight/assets/32903150/7d5a8e9b-bf36-4b01-be9d-2fbd723a4183)
 
 ### Возможные действия
 
