@@ -91,7 +91,8 @@
 #### Игрок
 ![player](https://github.com/KaBaN4iK357/BotFight/assets/32903150/7d5a8e9b-bf36-4b01-be9d-2fbd723a4183) </br>
 <b>Свойства объекта:</b></br>
-* Воскрешается на 3-й ход после смерти </br>
+* Погибает от взрыва </br>
+* Воскрешается на 3-й ход после смерти. </br>
 
 ### Возможные действия
 Возможные действия представлены в программе в виде enum [PlayerAction](https://github.com/KaBaN4iK357/BotFight/blob/main/BomberMans/BomberMansTCPFormsLibrary/PlayerAction.cs). За 1 ход игрок может сделать 1 из действией:
