@@ -31,29 +31,39 @@
 #### Порох
 ![Powder](https://github.com/KaBaN4iK357/BotFight/assets/32903150/46363242-0258-4abe-88dd-f1899e653af1) </br>
 <b>Свойства объекта:</b></br>
+* Можно уничтожить взрывом </br>
 * Может быть подобран игроком </br>
-* При подборе дает 1 очко и увеличивает дальность взрыва бомбы на 1 клетку
-* Можно уничтожить взрывом. </br>
+* При подборе дает 1 очко и увеличивает дальность взрыва бомбы на 1 клетку</br>
+взрыв бомбы при 0 пороха</br>
+![image](https://github.com/KaBaN4iK357/BotFight/assets/32903150/90e0b3b7-456a-448d-8e34-0b666cfc8946) </br>
+взрыв бомбы при 1 порохе</br>
+![image](https://github.com/KaBaN4iK357/BotFight/assets/32903150/3b822477-c44b-4813-8d2c-6156f88f96a4) </br>
+взрыв бомбы при 2 порохах</br>
+![image](https://github.com/KaBaN4iK357/BotFight/assets/32903150/7672ed88-511e-446a-8ce9-cab4b9386826) </br>
 
 #### Мина
 ![mine](https://github.com/KaBaN4iK357/BotFight/assets/32903150/8390e934-c646-49c9-82fb-2d9514def9ab) </br>
-![image](https://github.com/KaBaN4iK357/BotFight/assets/32903150/40287c6a-cfc6-42b8-9fba-00d9c8d3dc4c) </br>
 <b>Свойства объекта:</b></br>
 * Взрывается если игрок наступил </br>
-* Радиус взрыва равен 2 клетки
-* Можно подорвать взрывом </br>
+* Радиус взрыва равен 2 клетки </br>
+![image](https://github.com/KaBaN4iK357/BotFight/assets/32903150/40287c6a-cfc6-42b8-9fba-00d9c8d3dc4c)
+* Взрыв может быть остановлен стенами </br>
+![image](https://github.com/KaBaN4iK357/BotFight/assets/32903150/623f3c26-f8f4-4a76-87fc-cfffa65df6bc)
+![image](https://github.com/KaBaN4iK357/BotFight/assets/32903150/c329f3eb-0aed-446a-b97d-5db4cbce7dc5)
 * Возможны цепные реакции взрывов </br>
+![image](https://github.com/KaBaN4iK357/BotFight/assets/32903150/06e4eeb3-11c1-4b80-ac1d-7579b56280cb)
+![image](https://github.com/KaBaN4iK357/BotFight/assets/32903150/04be7905-8823-4826-a436-794367e22225)
 * Игрок, который инициировал взрыв мины (наступив или взорвав) считается инициатором взрыва </br>
 * Если мина подорвала игрока, то очки начисляются инициатору взрыва </br>
 * Нельзя получить очки за подрыв самого себя. </br>
-![image](https://github.com/KaBaN4iK357/BotFight/assets/32903150/06e4eeb3-11c1-4b80-ac1d-7579b56280cb)
-![image](https://github.com/KaBaN4iK357/BotFight/assets/32903150/04be7905-8823-4826-a436-794367e22225)
 
 #### Алмаз
 ![Diamond](https://github.com/KaBaN4iK357/BotFight/assets/32903150/006d05da-f673-4560-82fd-64c95b7d7410) </br>
 <b>Свойства объекта:</b></br>
-* Может быть подобран игроком (дает 10 очков) </br>
+* При подборе дает 10 очков</br>
 * Нельзя уничтожить взрывом </br>
+![image](https://github.com/KaBaN4iK357/BotFight/assets/32903150/feaab590-1843-4617-9f7f-92d5b64ec396)
+![image](https://github.com/KaBaN4iK357/BotFight/assets/32903150/24d7394d-0be1-4dd8-957d-43507fa6c7ef)
 * Не защищает от взрыва. </br>
 
 #### Бонус "Постройка"
@@ -70,14 +80,15 @@
 <b>Свойства объекта:</b></br>
 * Может быть подобран игроком </br>
 * При подборе у игрока меняется модель </br>
-![image](https://github.com/KaBaN4iK357/BotFight/assets/32903150/271f6beb-54c9-4299-b8ee-35365497c851) </br>
+![image](https://github.com/KaBaN4iK357/BotFight/assets/32903150/a0a7aa3f-04cc-46a6-9032-f977a300cd86) </br>
 * При подборе дает игроку суперсилы на следующие 10 ходов </br>
 * Во время действия суперсилы игрок неуязвим </br>
-![image](https://github.com/KaBaN4iK357/BotFight/assets/32903150/e52ca05a-15be-49e8-a90d-97b8405642bd) </br>
+![image](https://github.com/KaBaN4iK357/BotFight/assets/32903150/73221756-bc23-442b-b43a-726ab1a78a84) </br>
 * Установка бомбы заменяется на выстрел в заданном направлении </br>
 * Выстрел пробивает насквозь 1 простую стену </br>
-![image](https://github.com/KaBaN4iK357/BotFight/assets/32903150/e45e750d-1f62-48aa-9a40-c74b87416340)
-![image](https://github.com/KaBaN4iK357/BotFight/assets/32903150/9db88da7-71ce-4629-b935-48d6b7c19f2e) </br>
+![image](https://github.com/KaBaN4iK357/BotFight/assets/32903150/c607923a-1158-4832-994f-c973ca3ed355) </br>
+![image](https://github.com/KaBaN4iK357/BotFight/assets/32903150/3704bd0b-29b3-4531-8c2a-32f37121494a) </br>
+![image](https://github.com/KaBaN4iK357/BotFight/assets/32903150/427d700d-4b4b-4286-854d-21ada7278ecb) </br>
 * Дальность выстрела равна удвоенной дальности взрыва бомбы. </br>
 
 #### Бомба
@@ -94,7 +105,7 @@
 * Погибает от взрыва </br>
 * Воскрешается на 3-й ход после смерти. </br>
 
-### Возможные действия
+### Возможные действия игрока
 Возможные действия представлены в программе в виде enum [PlayerAction](https://github.com/KaBaN4iK357/BotFight/blob/main/BomberMans/BomberMansTCPFormsLibrary/PlayerAction.cs). За 1 ход игрок может сделать 1 из действией:
 * Ничего (None)
 * Шаг влево (Left)
@@ -130,10 +141,11 @@ public enum PlayerAction
 ## Как начать программировать своего бота
 0. Для начала работы необходимо установить .Net 7.0 SDK если он не установлен;
 1. Клонировать (скачать) данный репозиторий на свой компьютер;
-2. Запустить клиентскую часть [BomberManClient.sln](https://github.com/KaBaN4iK357/BotFight/tree/main/BomberMans/BomberManClient);
+2. Запустить клиентскую часть (далее клиент) [BomberManClient.sln](https://github.com/KaBaN4iK357/BotFight/tree/main/BomberMans/BomberManClient);
 3. В файле [ClientForm.cs](https://github.com/KaBaN4iK357/BotFight/blob/main/BomberMans/BomberManClient/BomberManClient/ClientForm.cs) задать имя игрока ```const string PlayerName = "Имя игрока";```
 4. Для пробного запуска необходимо запустить сервер [BomberMans.sln](https://github.com/KaBaN4iK357/BotFight/tree/main/BomberMans);
-5. Далее узнать IP адрес компьютера где запущен сервер, если вы запускаете сервер на своем компьютере, то нужно запустить командную строку и ввести ipconfig, скопировать адрес IPv4. 
+5. Далее узнать IP адрес компьютера где запущен сервер, если вы запускаете сервер на своем компьютере, то нужно запустить командную строку и ввести ipconfig, скопировать адрес IPv4;
+6. В клиенте перейти в класс
 
 ## Как участвовать
 Сообщить о намерении участвовать организатору (см. "Контактная информация"), если набирается минимальное количество команд, то Вам будет предоставлена информация о месте и времени проведения соревнования.
