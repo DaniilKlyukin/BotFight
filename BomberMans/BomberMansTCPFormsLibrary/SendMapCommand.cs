@@ -47,7 +47,7 @@ namespace BomberMansTCPFormsLibrary
                         case Bomb b: bombs.Append($"{i},{j},{b.Power},{b.TimeRemain};"); break;
                         case Player p:
                             {
-                                var sptr = p.SuperPowerTimeRemain ?? 0;
+                                var sptr = p.SuperPowerTimeRemain ?? -1;
                                 players.Append($"{i},{j},{p.Name},{sptr};");
                             }
                             break;

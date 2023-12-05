@@ -328,14 +328,46 @@ namespace BomberMans
 
         private void MakeMineExplosion(LandMine m, string? owner = null)
         {
-            AddExplosion(m.i, m.j, owner);
+            var dirs = new[] { (-1, 0), (1, 0), (0, -1), (0, 1) };
 
-            for (int i = m.i - LandMine.Power; i <= m.i + LandMine.Power; i++)
+            var visited = new Dictionary<(int, int), int>();
+            var queue = new Queue<(int, int, int)>();
+            queue.Enqueue((m.i, m.j, 0));
+
+            while (queue.Any())
             {
-                for (int j = m.j - LandMine.Power; j <= m.j + LandMine.Power; j++)
+                var (i, j, dist) = queue.Dequeue();
+
+                if (visited.TryGetValue((i, j), out var nodeDist))
                 {
-                    AddExplosion(i, j, owner);
+                    if (dist < nodeDist)
+                        visited[(i, j)] = dist;
+
+                    continue;
                 }
+
+                if (dist > LandMine.Power)
+                    continue; 
+
+                if (gameObjects.TryGetValue((i, j), out var go) && go.BlockExplosion)
+                {
+                    if (go.Destructible)
+                        visited.Add((i, j), dist);
+
+                    continue;
+                }
+
+                visited.Add((i, j), dist);
+
+                foreach (var (di, dj) in dirs)
+                {
+                    queue.Enqueue((i + di, j + dj, dist + 1));
+                }
+            }
+
+            foreach (var (i, j) in visited.Keys)
+            {
+                AddExplosion(i, j, owner);
             }
         }
 
@@ -421,6 +453,14 @@ namespace BomberMans
         {
             gameObjects = gameObjects.Where(g => g.Value is not Explosion).ToDictionary(g => g.Key, g => g.Value);
 
+            foreach (var (ip, p) in players.Where(t => t.Value.SuperPowerTimeRemain != null).ToArray())
+            {
+                p.SuperPowerTimeRemain--;
+
+                if (p.SuperPowerTimeRemain < 0)
+                    p.SuperPowerTimeRemain = null;
+            }
+
             var bombs = gameObjects.Select(g => g.Value).OfType<Bomb>().ToList();
             foreach (var b in bombs)
             {
@@ -451,14 +491,7 @@ namespace BomberMans
                 }
             }
 
-            foreach (var (ip, p) in players.Where(t => t.Value.SuperPowerTimeRemain != null).ToArray())
-            {
-                p.SuperPowerTimeRemain--;
-
-                if (p.SuperPowerTimeRemain == 0)
-                    p.SuperPowerTimeRemain = null;
-            }
-
+            /*
             MapGenerator.PlaceObjects(
                 gameObjects,
                 MapSize,
@@ -467,7 +500,7 @@ namespace BomberMans
                 spawner.GetSpawnPowdersCount(),
                 spawner.GetSpawnSuperPowerCount(),
                 spawner.GetSpawnDiamondsCount());
-
+            */
             actions.Clear();
         }
 
@@ -500,13 +533,25 @@ namespace BomberMans
                 gameObjects.Add((go.i, go.j), go);
 
                 if (go is Player p)
-                    players.Add(p.IP, p);
+                {
+                    if (players.ContainsKey(p.IP))
+                        players[p.IP] = p;
+                    else
+                        players.Add(p.IP, p);
+                }
             }
         }
 
         public void RemoveGameObject(int i, int j)
         {
-            gameObjects.Remove((i, j));
+            if (gameObjects.TryGetValue((i, j), out var go))
+            {
+                gameObjects.Remove((i, j));
+                if (go is Player p)
+                {
+                    players.Remove(p.IP);
+                }
+            }
         }
     }
 }

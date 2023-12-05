@@ -22,7 +22,7 @@
             Name = info[2];
 
             var sptr = int.Parse(info[3]);
-            SuperPowerTimeRemain = sptr == 0 ? null : sptr;
+            SuperPowerTimeRemain = sptr == -1 ? null : sptr;
         }
 
         public string IP { get; set; }

@@ -7,7 +7,7 @@ namespace BomberManClient
     public partial class ClientForm : Form
     {
         const string PlayerName = "YourM8";
-        VerySimpleBot bot = new VerySimpleBot();
+        Random rnd = new Random();
 
         public ClientForm()
         {
@@ -33,7 +33,7 @@ namespace BomberManClient
 
         public PlayerAction DoWork(GameObject?[,] map)
         {
-            return bot.DoAction(map, PlayerName);
+            return (PlayerAction)rnd.Next(Enum.GetValues<PlayerAction>().Length);
         }
     }
 }
