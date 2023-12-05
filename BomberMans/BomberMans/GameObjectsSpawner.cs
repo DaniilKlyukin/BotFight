@@ -12,13 +12,13 @@ namespace BomberMans
         public double DiamondMean { get; set; } = 0.15;
         public double DiamondStd { get; set; } = 0.3;
 
-        public double BuildBonusMean { get; set; } = 0.4;
+        public double BuildBonusMean { get; set; } = 0.2;
         public double BuildBonusStd { get; set; } = 0.3;
 
-        public double LandMineMean { get; set; } = 0.7;
+        public double LandMineMean { get; set; } = 0.5;
         public double LandMineStd { get; set; } = 0.7;
 
-        public double SuperPowerMean { get; set; } = 0.3;
+        public double SuperPowerMean { get; set; } = 0.175;
         public double SuperPowerStd { get; set; } = 0.3;
 
         public double WallSpawnProbability { get; set; } = 0.2;

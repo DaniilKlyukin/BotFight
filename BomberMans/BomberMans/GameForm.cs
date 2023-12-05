@@ -70,13 +70,8 @@ namespace BomberMans
         }
 
         private void ClientDisconnected(object? sender, ConnectionEventArgs e)
-        {/*
-            controller.RemovePlayer(e.IpPort);
+        {
 
-            if (!GameTimer.Enabled)
-            {
-                Invoke(VisualizationUpdate);
-            }*/
         }
 
         private void ClientConnected(object? sender, ConnectionEventArgs e)
@@ -140,7 +135,6 @@ namespace BomberMans
                 server.SendAsync(ip, command);
             }
         }
-
         private void GameTimer_Tick(object sender, EventArgs e)
         {
             try

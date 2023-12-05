@@ -491,7 +491,7 @@ namespace BomberMans
                 }
             }
 
-            /*
+            
             MapGenerator.PlaceObjects(
                 gameObjects,
                 MapSize,
@@ -500,7 +500,7 @@ namespace BomberMans
                 spawner.GetSpawnPowdersCount(),
                 spawner.GetSpawnSuperPowerCount(),
                 spawner.GetSpawnDiamondsCount());
-            */
+            
             actions.Clear();
         }
 
