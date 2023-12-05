@@ -110,7 +110,7 @@
 * Воскрешается на 3-й ход после смерти. </br>
 
 ### Возможные действия игрока
-Возможные действия представлены в программе в виде enum [PlayerAction](https://github.com/KaBaN4iK357/BotFight/blob/main/BomberMans/BomberMansTCPFormsLibrary/PlayerAction.cs). За 1 ход игрок может сделать 1 из действией:
+Возможные действия представлены в программе в виде enum [PlayerAction](https://github.com/KaBaN4iK357/BotFight/blob/main/BomberMans/BomberMansTCPFormsLibrary/PlayerAction.cs). За 1 ход игрок может сделать 1 из действий:
 * Ничего (None)
 * Шаг влево (Left)
 * Шаг вправо (Right)
