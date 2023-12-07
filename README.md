@@ -68,7 +68,7 @@
 #### Алмаз
 ![Diamond](https://github.com/KaBaN4iK357/BotFight/assets/32903150/006d05da-f673-4560-82fd-64c95b7d7410) </br>
 <b>Свойства объекта:</b></br>
-* При подборе дает 10 очков</br>
+* При подборе дает 10 очков. </br>
 * Нельзя уничтожить взрывом </br>
 ![image](https://github.com/KaBaN4iK357/BotFight/assets/32903150/feaab590-1843-4617-9f7f-92d5b64ec396)
 ![image](https://github.com/KaBaN4iK357/BotFight/assets/32903150/24d7394d-0be1-4dd8-957d-43507fa6c7ef)
