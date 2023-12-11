@@ -56,7 +56,11 @@ namespace BomberMansTCPFormsLibrary
                 g.DrawString(p.Name, myFont, brush, point);
             }
 
-            pb.Invoke(() => pb.Image = mainBitmap);
+            pb.Invoke(() => 
+            {
+                pb.Size = mainBitmap.Size;
+                pb.Image = mainBitmap;
+            });
         }
 
         private static Bitmap GetBitmap(GameObject go, int cellSize = 20)

@@ -64,15 +64,14 @@
             splitContainer.SplitterDistance = 799;
             splitContainer.SplitterWidth = 12;
             splitContainer.TabIndex = 5;
+            splitContainer.PreviewKeyDown += splitContainer_PreviewKeyDown;
             // 
             // pictureBox
             // 
-            pictureBox.Dock = DockStyle.Fill;
             pictureBox.Location = new Point(0, 0);
             pictureBox.Name = "pictureBox";
-            pictureBox.Size = new Size(799, 731);
-            pictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
-            pictureBox.TabIndex = 0;
+            pictureBox.Size = new Size(400, 400);
+            pictureBox.TabIndex = 1;
             pictureBox.TabStop = false;
             // 
             // playersDataGridView
@@ -142,7 +141,6 @@
             Name = "ClientForm";
             Text = "Чемпионат \"Бомбермен\"";
             splitContainer.Panel1.ResumeLayout(false);
-            splitContainer.Panel1.PerformLayout();
             splitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainer).EndInit();
             splitContainer.ResumeLayout(false);
@@ -154,10 +152,10 @@
         #endregion
 
         private SplitContainer splitContainer;
-        private PictureBox pictureBox;
         private DataGridView playersDataGridView;
         private DataGridViewTextBoxColumn PositionColumn;
         private DataGridViewTextBoxColumn NameColumn;
         private DataGridViewTextBoxColumn ScoreColumn;
+        private PictureBox pictureBox;
     }
 }

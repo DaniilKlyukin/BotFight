@@ -12,7 +12,7 @@ namespace BomberMans
         bool developerMode = false;
         SimpleTcpServer server;
         GameController controller;
-        const int CellSize = 24;
+        int CellSize = 30;
         const int MapSize = 40;
         HashSet<string> bannedPlayers = new HashSet<string>();
         static Random rnd = new Random();
@@ -186,11 +186,8 @@ namespace BomberMans
             DeveloperButtom.BackColor = developerMode ? Color.Green : Color.FromArgb(255, 240, 240, 240);
         }
 
-        private void splitContainer_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        private void DeveloperModeButtonClick(PreviewKeyDownEventArgs e)
         {
-            if (!developerMode)
-                return;
-
             //F1 - heavy wall, F2 - wall, F3 - powder, F4 - mine, F5 - diamond, F6 - build, F7 - super power, F8 - bomb, F9 - dummy, F12 - delete
 
             var relativePoint = pictureBox.PointToClient(Cursor.Position);
@@ -228,6 +225,23 @@ namespace BomberMans
                 case Keys.NumPad2: controller.AddAction("YourM8", PlayerAction.BombBottom); break;
                 case Keys.NumPad8: controller.AddAction("YourM8", PlayerAction.BombTop); break;
             }
+        }
+
+        private void splitContainer_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Oemplus:
+                case Keys.Add: CellSize += 4; break;
+
+                case Keys.OemMinus:
+                case Keys.Subtract: if (CellSize > 24) CellSize -= 4; break;
+            }
+
+            if (developerMode)
+            {
+                DeveloperModeButtonClick(e);
+            }            
 
             if (!GameTimer.Enabled)
             {

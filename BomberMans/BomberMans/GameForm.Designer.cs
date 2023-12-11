@@ -44,20 +44,20 @@
             StopButton = new ToolStripMenuItem();
             параметрыToolStripMenuItem = new ToolStripMenuItem();
             DeveloperButtom = new ToolStripMenuItem();
-            pictureBox = new PictureBox();
             splitContainer = new SplitContainer();
             playersDataGridView = new DataGridView();
             PositionColumn = new DataGridViewTextBoxColumn();
             NameColumn = new DataGridViewTextBoxColumn();
             ScoreColumn = new DataGridViewTextBoxColumn();
+            pictureBox = new PictureBox();
             playerContextMenu.SuspendLayout();
             menuStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)splitContainer).BeginInit();
             splitContainer.Panel1.SuspendLayout();
             splitContainer.Panel2.SuspendLayout();
             splitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)playersDataGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
             SuspendLayout();
             // 
             // playerContextMenu
@@ -137,16 +137,6 @@
             DeveloperButtom.Text = "Режим разработчика";
             DeveloperButtom.Click += DeveloperButtom_Click;
             // 
-            // pictureBox
-            // 
-            pictureBox.Dock = DockStyle.Fill;
-            pictureBox.Location = new Point(0, 0);
-            pictureBox.Name = "pictureBox";
-            pictureBox.Size = new Size(1033, 877);
-            pictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
-            pictureBox.TabIndex = 0;
-            pictureBox.TabStop = false;
-            // 
             // splitContainer
             // 
             splitContainer.Dock = DockStyle.Fill;
@@ -225,6 +215,14 @@
             ScoreColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
             ScoreColumn.Width = 113;
             // 
+            // pictureBox
+            // 
+            pictureBox.Location = new Point(0, 0);
+            pictureBox.Name = "pictureBox";
+            pictureBox.Size = new Size(1033, 877);
+            pictureBox.TabIndex = 0;
+            pictureBox.TabStop = false;
+            // 
             // GameForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -238,13 +236,12 @@
             playerContextMenu.ResumeLayout(false);
             menuStrip.ResumeLayout(false);
             menuStrip.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox).EndInit();
             splitContainer.Panel1.ResumeLayout(false);
-            splitContainer.Panel1.PerformLayout();
             splitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainer).EndInit();
             splitContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)playersDataGridView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -256,7 +253,6 @@
         private ToolStripMenuItem играToolStripMenuItem;
         private ToolStripMenuItem StartButton;
         private ToolStripMenuItem StopButton;
-        private PictureBox pictureBox;
         private ToolStripMenuItem CreateLevel;
         private SplitContainer splitContainer;
         private ContextMenuStrip playerContextMenu;
@@ -268,5 +264,6 @@
         private DataGridViewTextBoxColumn PositionColumn;
         private DataGridViewTextBoxColumn NameColumn;
         private DataGridViewTextBoxColumn ScoreColumn;
+        private PictureBox pictureBox;
     }
 }
