@@ -347,7 +347,7 @@ namespace BomberMans
                 }
 
                 if (dist > LandMine.Power)
-                    continue; 
+                    continue;
 
                 if (gameObjects.TryGetValue((i, j), out var go) && go.BlockExplosion)
                 {
@@ -491,7 +491,7 @@ namespace BomberMans
                 }
             }
 
-            
+
             MapGenerator.PlaceObjects(
                 gameObjects,
                 MapSize,
@@ -500,8 +500,12 @@ namespace BomberMans
                 spawner.GetSpawnPowdersCount(),
                 spawner.GetSpawnSuperPowerCount(),
                 spawner.GetSpawnDiamondsCount());
-            
+
             actions.Clear();
+        }
+        public IList<Player> GetPlayers()
+        {
+            return players.Values.ToList();
         }
 
         public GameObject?[,] GetMap()
@@ -521,36 +525,41 @@ namespace BomberMans
             return map;
         }
 
-        public IList<Player> GetPlayers()
-        {
-            return players.Values.ToList();
-        }
-
+        /// <summary>
+        /// Разместить объект на игровое поле
+        /// </summary>
+        /// <param name="go">Игровой объект</param>
         public void PlaceGameObject(GameObject go)
         {
-            if (!gameObjects.ContainsKey((go.i, go.j)))
-            {
-                gameObjects.Add((go.i, go.j), go);
+            if (gameObjects.ContainsKey((go.i, go.j)))
+                return;
 
-                if (go is Player p)
-                {
-                    if (players.ContainsKey(p.IP))
-                        players[p.IP] = p;
-                    else
-                        players.Add(p.IP, p);
-                }
+            gameObjects.Add((go.i, go.j), go);
+
+            if (go is Player p)
+            {
+                if (players.ContainsKey(p.IP))
+                    players[p.IP] = p;
+                else
+                    players.Add(p.IP, p);
             }
+
         }
 
+        /// <summary>
+        /// Удалить объект с игрового поля по координатам его ячейки
+        /// </summary>
+        /// <param name="i">Индекс строки игрового поля</param>
+        /// <param name="j">Индекс столбца игрового поля</param>
         public void RemoveGameObject(int i, int j)
         {
-            if (gameObjects.TryGetValue((i, j), out var go))
+            if (!gameObjects.TryGetValue((i, j), out var go))
+                return;
+
+            gameObjects.Remove((i, j));
+            if (go is Player p)
             {
-                gameObjects.Remove((i, j));
-                if (go is Player p)
-                {
-                    players.Remove(p.IP);
-                }
+                players.Remove(p.IP);
             }
         }
     }
